@@ -29,32 +29,32 @@ Suppose we have an Excel file named events.xlsx with the following data:
 
 ## Input of user :
 
-Enter MAKATKAV (5 digits) or KAV (3 digits), separated by commas:  001 , 002 , 003 , 004 , 005 , 006
+######## Enter MAKATKAV (5 digits) or KAV (3 digits), separated by commas:  001 , 002 , 003 , 004 , 005 , 006
 ---
-Enter start time (in HHMM or HH:MM format): 08:00
+######## Enter start time (in HHMM or HH:MM format): 08:00
 ---
-Enter end time (in HHMM or HH:MM format): 12:00
+######## Enter end time (in HHMM or HH:MM format): 12:00
 
 
 ## Output : 
 
 Zone: hasharon
 
-Time Range: 08:30-10:45
+######## Time Range: 08:30-10:45
 ---
-Line: 10001  ||  (direction - [1, 2]) || Count number: (3)
+######## Line: 10001  ||  (direction - [1, 2]) || Count number: (3)
 ---
-Line: 10003  ||  (direction - [1]) || Count number: (1)
+######## Line: 10003  ||  (direction - [1]) || Count number: (1)
  ----------------------------------- 
 
 
 Zone: shaham
 
-Time Range: 09:00-10:00
+######## Time Range: 09:00-10:00
 ---
-Line: 10004  ||  (direction - [2]) || Count number: (1)
+######## Line: 10004  ||  (direction - [2]) || Count number: (1)
 ---
-Line: 10005  ||  (direction - [2]) || Count number: (1)
+######## Line: 10005  ||  (direction - [2]) || Count number: (1)
 
 
 
