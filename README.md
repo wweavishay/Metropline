@@ -40,23 +40,23 @@ Suppose we have an Excel file named events.xlsx with the following data:
 ---
 ## Output : 
 
-### Zone: hasharon
+## Zone: hasharon
 
-Time Range: 08:30-10:45
+### Time Range: 08:30-10:45
 ---
-Line: 10001  ||  (direction - [1, 2]) || Count number: (3)
+### Line: 10001  ||  (direction - [1, 2]) || Count number: (3)
 ---
-Line: 10003  ||  (direction - [1]) || Count number: (1)
+### Line: 10003  ||  (direction - [1]) || Count number: (1)
  ----------------------------------- 
 
 
-### Zone: shaham
+## Zone: shaham
 
-Time Range: 09:00-10:00
+### Time Range: 09:00-10:00
 ---
-Line: 10004  ||  (direction - [2]) || Count number: (1)
+### Line: 10004  ||  (direction - [2]) || Count number: (1)
 ---
-Line: 10005  ||  (direction - [2]) || Count number: (1)
+### Line: 10005  ||  (direction - [2]) || Count number: (1)
 
 
 
