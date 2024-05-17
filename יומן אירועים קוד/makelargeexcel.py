@@ -1,24 +1,23 @@
 import openpyxl
 from openpyxl import Workbook
-
+import random
 
 # Function to generate the data
 def generate_data(num_rows):
-    areas = ["hasharon", "beer sheva", "shaham"]
+    areas = {"hasharon": "10", "beer sheva": "11", "shaham": "12"}
     data = []
 
     for i in range(num_rows):
-        area = areas[i % len(areas)]
+        area = list(areas.keys())[i % len(areas)]
         date = 14
         time = 830 + (i % 50) * 15
-        kav = f'{(i % 20) + 1:03}'
-        makatkav = f'100{(i % 20) + 1:02}'
+        kav = f'{(i % 30) + 1:03}'
+        makatkav = f'{areas[area]}{(i % 30) + 1:03}'
         direction = 1 if i % 2 == 0 else 2
 
         data.append([area, date, time, kav, makatkav, direction])
 
     return data
-
 
 # Generate 100,000 rows of data
 data = generate_data(100000)
