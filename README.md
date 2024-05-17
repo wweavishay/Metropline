@@ -29,11 +29,11 @@ Suppose we have an Excel file named events.xlsx with the following data:
 
 ## Input of user :
 
-######## Enter MAKATKAV (5 digits) or KAV (3 digits), separated by commas:  001 , 002 , 003 , 004 , 005 , 006
+### Enter MAKATKAV (5 digits) or KAV (3 digits), separated by commas:  001 , 002 , 003 , 004 , 005 , 006
 ---
-######## Enter start time (in HHMM or HH:MM format): 08:00
+### Enter start time (in HHMM or HH:MM format): 08:00
 ---
-######## Enter end time (in HHMM or HH:MM format): 12:00
+### Enter end time (in HHMM or HH:MM format): 12:00
 
 
 ## Output : 
