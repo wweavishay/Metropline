@@ -6,7 +6,7 @@ This script helps in analyzing events data stored in an Excel file. It provides 
 
 1. Clone this repository:
 
-    git clone https://github.com/your-username/events-data-analysis.git
+    git clone https://github.com/wweavishay/Metropline
 
 2. Navigate to the project directory:
 
