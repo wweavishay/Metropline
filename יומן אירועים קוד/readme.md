@@ -1,10 +1,10 @@
 # searchandsort.py 
 
 
-###example 1 
+### Example 1 
 ![Local Image](./printscreenpng.png)
 --
-###example 2
+### Example 2
 ![Local Image](./printscreen2..png)
 
 --
