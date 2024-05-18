@@ -1,6 +1,9 @@
 # searchandsort.py 
 ## Example
 
+![Local Image](./printscreenpng.png)
+
+
 Suppose we have an Excel file named events.xlsx with the following data:
 
 | area       | date | time | kav | makatkav | direction |
