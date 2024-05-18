@@ -1,5 +1,15 @@
+# searchandsort.py 
 
-## Example
+#### The provided script processes event data from an Excel file, filtering it based on user input for line codes (KAV or MAKATKAV) and a specified time range. It then presents the filtered data in blocks by area, highlighting the time range and count of occurrences for each line and direction, while alerting the user if no matching data is found or if any requested KAVs are missing.
+
+### Example 1 
+![Local Image](./printscreenpng.png)
+--
+### Example 2
+![Local Image](./printscreen2..png)
+
+--
+## Example 3
 
 Suppose we have an Excel file named events.xlsx with the following data:
 
