@@ -1,11 +1,14 @@
 # searchandsort.py 
 
 
-
+###example 1 
 ![Local Image](./printscreenpng.png)
+--
+###example 2
 ![Local Image](./printscreen2..png)
 
-## Example
+--
+## Example 3
 
 Suppose we have an Excel file named events.xlsx with the following data:
 
