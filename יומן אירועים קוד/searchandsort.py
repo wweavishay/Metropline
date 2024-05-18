@@ -90,14 +90,7 @@ def check_not_found_values(filtered_data, filter_values, kav_col, makatkav_col):
     if not_found:
         print(f"\n ALERT - The following kavs were not found in the filtered data: {', '.join(not_found)}")
 
-def main():
-    file_path = 'events.xlsx'  # Update this path to your file location
-    sheet_name = 'Sheet1'  # Update this to the correct sheet name
-    kav_col = 'kav'  # Column name for KAV
-    makatkav_col = 'makatkav'  # Column name for MAKATKAV
-    time_col = 'time'  # Column name for time
-    area_col = 'area'  # Column name for area
-    direction_col = 'direction'  # Column name for direction
+def main(file_path, sheet_name, kav_col,makatkav_col, time_col, area_col, direction_col):
 
     data = load_data(file_path, sheet_name)
     data = configure_columns(data, kav_col, makatkav_col)
@@ -118,5 +111,18 @@ def main():
 
     check_not_found_values(filtered_data, filter_values, kav_col, makatkav_col)
 
+
+
+
 if __name__ == "__main__":
-    main()
+
+    file_path = 'events.xlsx'  # Update this path to your file location
+    sheet_name = 'Sheet1'  # Update this to the correct sheet name
+    kav_col = 'kav'  # Column name for KAV
+    makatkav_col = 'makatkav'  # Column name for MAKATKAV
+    time_col = 'time'  # Column name for time
+    area_col = 'area'  # Column name for area
+    direction_col = 'direction'  # Column name for direction
+
+
+    main(file_path, sheet_name, kav_col,makatkav_col, time_col, area_col, direction_col)
