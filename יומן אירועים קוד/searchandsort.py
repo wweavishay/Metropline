@@ -2,14 +2,17 @@ import pandas as pd
 import re
 
 def load_data(file_path, sheet_name):
+    """Load data from an Excel file."""
     return pd.read_excel(file_path, sheet_name=sheet_name)
 
-def configure_columns(data, kav_col, makatkav_col, time_col, area_col, direction_col):
+def configure_columns(data, kav_col, makatkav_col):
+    """Format the 'kav' and 'makatkav' columns."""
     data[kav_col] = data[kav_col].apply(lambda x: f"{int(x):03d}")
     data[makatkav_col] = data[makatkav_col].apply(lambda x: f"{int(x):05d}")
     return data
 
 def normalize_time(time_str):
+    """Convert time string to integer in HHMM format."""
     match = re.match(r"(\d{1,2}):?(\d{2})", time_str)
     if not match:
         raise ValueError("Invalid time format. Please enter time in HHMM or HH:MM format.")
@@ -17,20 +20,19 @@ def normalize_time(time_str):
     return int(hours) * 100 + int(minutes)
 
 def filter_data(data, filter_values, kav_col, makatkav_col):
-    filter_values = [val.strip() for val in filter_values.split(',')]
-    filter_values = [val.zfill(3) if len(val) == 3 else val.zfill(5) for val in filter_values]
-
+    """Filter data based on provided 'kav' or 'makatkav' values."""
+    filter_values = [val.strip().zfill(3) if len(val.strip()) == 3 else val.strip().zfill(5) for val in filter_values.split(',')]
     filtered_data = data[(data[kav_col].isin(filter_values)) | (data[makatkav_col].isin(filter_values))]
-
     if filtered_data.empty:
         raise ValueError("No matching data for the provided filter values.")
-
     return filtered_data
 
 def filter_by_time(data, start_time, end_time, time_col):
+    """Filter data within a specified time range."""
     return data[(data[time_col] >= start_time) & (data[time_col] <= end_time)]
 
 def present_data(data, area_col, time_col, makatkav_col, direction_col):
+    """Format and present the filtered data."""
     blocks = []
     grouped = data.groupby(area_col)
     for name, group in grouped:
@@ -46,9 +48,47 @@ def present_data(data, area_col, time_col, makatkav_col, direction_col):
                 directions_str = ', '.join(map(str, sorted(directions)))
                 show_count = len(makatkav_group[makatkav_group[makatkav_col] == makatkav])
                 area_blocks.append(f"Line: {makatkav}  ||  (direction - [{directions_str}]) || Count number: ({show_count})")
-
         blocks.append("\n".join(area_blocks))
     return "\n ----------------------------------- \n\n".join(blocks)
+
+def get_filter_values():
+    """Get filter values from the user."""
+    return input("Enter makatkav (5 digits) or kav (3 digits), separated by commas: ")
+
+def get_time_range():
+    """Get time range from the user."""
+    start_time_str = input("Enter start time (in HHMM or HH:MM format): ")
+    end_time_str = input("Enter end time (in HHMM or HH:MM format): ")
+    return start_time_str, end_time_str
+
+def validate_and_filter_data(data, kav_col, makatkav_col):
+    """Validate user input and filter the data."""
+    filter_values = get_filter_values()
+    try:
+        filtered_data = filter_data(data, filter_values, kav_col, makatkav_col)
+    except ValueError as e:
+        print(e)
+        return None, None
+    return filtered_data, filter_values
+
+def validate_and_filter_by_time(filtered_data, time_col):
+    """Validate time input and filter data by time."""
+    start_time_str, end_time_str = get_time_range()
+    try:
+        start_time = normalize_time(start_time_str)
+        end_time = normalize_time(end_time_str)
+    except ValueError as e:
+        print(e)
+        return None
+    time_filtered_data = filter_by_time(filtered_data, start_time, end_time, time_col)
+    return time_filtered_data
+
+def check_not_found_values(filtered_data, filter_values, kav_col, makatkav_col):
+    """Check for filter values that are not found in the data."""
+    filter_values = [val.strip().zfill(3) if len(val.strip()) == 3 else val.strip().zfill(5) for val in filter_values.split(',')]
+    not_found = [val for val in filter_values if val not in filtered_data[kav_col].unique() and val not in filtered_data[makatkav_col].unique()]
+    if not_found:
+        print(f"\n ALERT - The following kavs were not found in the filtered data: {', '.join(not_found)}")
 
 def main():
     file_path = 'events.xlsx'  # Update this path to your file location
@@ -60,27 +100,15 @@ def main():
     direction_col = 'direction'  # Column name for direction
 
     data = load_data(file_path, sheet_name)
-    data = configure_columns(data, kav_col, makatkav_col, time_col, area_col, direction_col)
+    data = configure_columns(data, kav_col, makatkav_col)
 
-    filter_values = input(f"Enter {makatkav_col} (5 digits) or {kav_col} (3 digits), separated by commas: ")
-    try:
-        filtered_data = filter_data(data, filter_values, kav_col, makatkav_col)
-    except ValueError as e:
-        print(e)
+    filtered_data, filter_values = validate_and_filter_data(data, kav_col, makatkav_col)
+    if filtered_data is None:
         return
 
-    start_time_str = input("Enter start time (in HHMM or HH:MM format): ")
-    end_time_str = input("Enter end time (in HHMM or HH:MM format): ")
-    print("----------------------------------------------------------------------------")
-
-    try:
-        start_time = normalize_time(start_time_str)
-        end_time = normalize_time(end_time_str)
-    except ValueError as e:
-        print(e)
+    time_filtered_data = validate_and_filter_by_time(filtered_data, time_col)
+    if time_filtered_data is None:
         return
-
-    time_filtered_data = filter_by_time(filtered_data, start_time, end_time, time_col)
 
     if time_filtered_data.empty:
         print("ALERT - No data available for the given time range.")
@@ -88,11 +116,7 @@ def main():
         result = present_data(time_filtered_data, area_col, time_col, makatkav_col, direction_col)
         print(result)
 
-    filter_values = [val.strip().zfill(3) if len(val.strip()) == 3 else val.strip().zfill(5) for val in filter_values.split(',')]
-    not_found = [val for val in filter_values if val not in time_filtered_data[kav_col].unique() and val not in time_filtered_data[makatkav_col].unique()]
-
-    if not_found:
-        print(f"\n ALERT - The following {kav_col}s were not found in the filtered data: {', '.join(not_found)}")
+    check_not_found_values(filtered_data, filter_values, kav_col, makatkav_col)
 
 if __name__ == "__main__":
     main()
